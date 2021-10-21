@@ -1,0 +1,17 @@
+MkRet 
+    (MkImplies 
+        (MkImplies (MkPrimitive "P") (MkPrimitive "Q")) 
+        (MkImplies (MkNot (MkPrimitive "Q")) (MkNot (MkPrimitive "P")))
+    )
+    (MkShowingImplies "QfromP" (
+        MkRet 
+            (MkImplies (MkNot (MkPrimitive "Q")) (MkNot (MkPrimitive "P")))
+            (MkShowingImplies "notQ" (
+                MkRet
+                    (MkNot (MkPrimitive "P"))
+                    (MkShowingNot "P" (
+                        MkLetIn "Q" (MkPrimitive "Q") (MkUsingImplies "P" "QfromP") (
+                        MkRet (MkContradiction) (MkShowingContradiction "notQ" "Q")
+                    )))
+            ))
+    ))
